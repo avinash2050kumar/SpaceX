@@ -1,8 +1,13 @@
 import { Client } from 'utils/axios';
 import type { TSpaceX } from 'typings/spaceX';
-import { SET_LAUNCHES, SPACEX_LOADING } from 'store/spaceX/types';
+import {
+	RESET_LAUNCHES,
+	SET_LAUNCHES,
+	SPACEX_LOADING,
+} from 'store/spaceX/types';
+import type { Dispatch } from 'redux';
 
-export const fetchAllLaunches = () => async (dispatch: any) => {
+export const fetchAllLaunches = () => async (dispatch: Dispatch) => {
 	try {
 		dispatch(setSpaceXLoading(true));
 		const res = await Client.get('/launches');
@@ -19,7 +24,11 @@ export const setSpaceXLoading = (payload: boolean) => ({
 	payload,
 });
 
-export const setAllLaunches = (payload: TSpaceX) => ({
+export const setAllLaunches = (payload: TSpaceX[]) => ({
 	type: SET_LAUNCHES,
 	payload,
+});
+
+export const resetLaunches = () => ({
+	type: RESET_LAUNCHES,
 });

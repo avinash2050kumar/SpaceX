@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 import spaceXReducer from 'store/spaceX/spaceXReducer';
 
-export default combineReducers({
+const rootReducer = combineReducers({
 	main: spaceXReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;

@@ -2,9 +2,11 @@ import { TSpaceX } from 'typings/spaceX';
 
 export const SPACEX_LOADING = 'SPACEX_LOADING';
 export const SET_LAUNCHES = 'SET_LAUNCHES';
+export const RESET_LAUNCHES = 'RESET_LAUNCHES';
 
 interface ISetSpaceXLoading {
 	type: typeof SPACEX_LOADING;
+	payload: boolean;
 }
 
 interface ISetAllLaunches {
@@ -12,4 +14,11 @@ interface ISetAllLaunches {
 	payload: TSpaceX[];
 }
 
-export type SpaceXActionType = ISetSpaceXLoading | ISetAllLaunches;
+interface IResetLaunchState {
+	type: typeof RESET_LAUNCHES;
+}
+
+export type SpaceXActionType =
+	| ISetSpaceXLoading
+	| ISetAllLaunches
+	| IResetLaunchState;
