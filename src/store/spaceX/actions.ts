@@ -3,9 +3,11 @@ import type { TSpaceX } from 'typings/spaceX';
 import {
 	RESET_LAUNCHES,
 	SET_LAUNCHES,
+	SORT_LAUNCHES,
 	SPACEX_LOADING,
 } from 'store/spaceX/types';
 import type { Dispatch } from 'redux';
+import type { LaunchSortOrder } from 'screens/DashBoard';
 
 export const fetchAllLaunches = () => async (dispatch: Dispatch) => {
 	try {
@@ -31,4 +33,9 @@ export const setAllLaunches = (payload: TSpaceX[]) => ({
 
 export const resetLaunches = () => ({
 	type: RESET_LAUNCHES,
+});
+
+export const sortLaunches = (payload: LaunchSortOrder) => ({
+	type: SORT_LAUNCHES,
+	payload,
 });
