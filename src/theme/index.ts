@@ -8,6 +8,7 @@ const Pallet = {
 	grey3: '#E6EAEC',
 	grey4: '#F5F7F8',
 	error: '#c43232',
+	blue: '#87CEEB',
 	black: '#000',
 };
 
