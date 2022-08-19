@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+
 import {
 	fetchAllLaunches,
 	resetLaunches,
 	sortLaunches,
 } from 'store/spaceX/actions';
-import { Dispatch } from 'redux';
 import { Loading } from 'components/app';
 import type { RootState } from 'store/rootReducer';
 import { FlexCol, FlexRow, Gutter } from 'components/atoms';
 import styled from 'styled-components/native';
-import { ItemCard, SortingModal } from 'screens/DashBoard';
+import { FilterModal, ItemCard, SortModal } from 'screens/DashBoard';
+import type { TFilterObj } from 'screens/DashBoard';
 import type { LaunchSortOrder } from 'screens/DashBoard';
 import { TSpaceX } from 'typings/spaceX';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,6 +37,9 @@ const LaunchDashboard = ({ navigation }: any) => {
 	const launches = useSelector(
 		(state: RootState) => state.main.filteredDataSource,
 	);
+	const dataSource = useSelector(
+		(state: RootState) => state.main.spaceXDataSource,
+	);
 
 	useEffect(() => {
 		dispatch(fetchAllLaunches());
@@ -45,6 +49,7 @@ const LaunchDashboard = ({ navigation }: any) => {
 		};
 	}, [dispatch]);
 
+	// Navbar Icons
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (
@@ -78,15 +83,25 @@ const LaunchDashboard = ({ navigation }: any) => {
 		return <ItemCard item={item} />;
 	}, []);
 
+	const onFilter = (obj: TFilterObj) => {
+		console.log(obj, 'filterObj');
+	};
+
 	return (
 		<Wrapper>
 			<Loading isLoading={loading} />
-			<SortingModal
+			<SortModal
 				selected={sortOrder}
 				onSelect={onSortSelect}
 				sortOrder={sortOrder}
 				visible={isSortVisible}
 				onClose={() => setIsSortVisible(false)}
+			/>
+			<FilterModal
+				visible={isFilterVisible}
+				onDone={onFilter}
+				onClose={() => setIsFilterVisible(false)}
+				dataSource={dataSource}
 			/>
 			<FlatList
 				data={launches}
