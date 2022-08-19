@@ -12,12 +12,15 @@ type Props = {
 const Wrapper = styled(TouchableOpacity)`
 	display: flex;
 	margin: 5px;
-	flex: 1;
+	flex: 0.5;
 `;
 
 const ImageWrapper = styled(FlexCol)`
 	padding: 10px;
 	background: ${(props) => props.theme.colors.grey4};
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	overflow: hidden;
 `;
 
 const Image = styled.Image`
