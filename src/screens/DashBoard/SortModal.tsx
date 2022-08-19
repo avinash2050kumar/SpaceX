@@ -50,7 +50,7 @@ type Props = ModalProps & {
 	onClose: Function;
 };
 
-const SortingModal: React.ComponentType<Props> = ({
+const SortModal: React.ComponentType<Props> = ({
 	onSelect,
 	onClose,
 	selected,
@@ -112,4 +112,4 @@ const SortingModal: React.ComponentType<Props> = ({
 	);
 };
 
-export { SortingModal };
+export { SortModal };
