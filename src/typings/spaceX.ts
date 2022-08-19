@@ -1,6 +1,6 @@
 type NBoolean = null | boolean;
 type NNumber = null | number;
-type NString = null | number;
+type NString = null | string;
 
 type Cores = {
 	core_serial: string;
@@ -63,7 +63,7 @@ type Rocket = {
 	};
 	second_stage: {
 		block: NNumber;
-		payloads: TPayload;
+		payloads: TPayload[];
 	};
 	fairings: Fairings;
 };
@@ -95,6 +95,31 @@ type LaunchSite = {
 	site_name_long: string;
 };
 
+type TTimeLine = {
+	webcast_liftoff: NNumber;
+	go_for_prop_loading: NNumber;
+	rp1_loading: NNumber;
+	stage1_lox_loading: NNumber;
+	stage2_lox_loading: NNumber;
+	engine_chill: NNumber;
+	prelaunch_checks: NNumber;
+	propellant_pressurization: NNumber;
+	go_for_launch: NNumber;
+	ignition: NNumber;
+	liftoff: NNumber;
+	maxq: NNumber;
+	meco: NNumber;
+	stage_sep: NNumber;
+	second_stage_ignition: NNumber;
+	fairing_deploy: NNumber;
+	first_stage_entry_burn: NNumber;
+	'seco-1': NNumber;
+	first_stage_landing: NNumber;
+	second_stage_restart: NNumber;
+	'seco-2': NNumber;
+	payload_deploy: NNumber;
+};
+
 export type TSpaceX = {
 	flight_number: number;
 	mission_name: string;
@@ -114,8 +139,8 @@ export type TSpaceX = {
 	details: NString;
 	static_fire_date_utc: string;
 	static_fire_date_unix: NNumber;
-	timeline: { webcast_liftoff: 54 };
-	crew: string[] | null;
+	timeline: TTimeLine;
+	crew?: string[] | null;
 	launch_failure_details?: LaunchFailure;
 	links: Links;
 	telemetry: {

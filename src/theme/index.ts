@@ -4,12 +4,15 @@ import { DefaultTheme } from 'styled-components/native';
 const Pallet = {
 	primaryGrey: '#6D7177',
 	primaryWhite: '#FFFFFF',
+	gray: '#fafafa',
 	grey2: '#AAAAAA',
 	grey3: '#E6EAEC',
-	grey4: '#F5F7F8',
+	grey4: '#F0F4F6',
 	error: '#c43232',
 	blue: '#87CEEB',
 	black: '#000',
+	green: '#0E9700',
+	transparentBlack: '#00000077',
 };
 
 const FontSize = {
