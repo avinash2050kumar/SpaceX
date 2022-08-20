@@ -160,7 +160,7 @@ const FilterModal: React.ComponentType<Props> = ({
 						/>
 						<SelectDate
 							text={
-								filterObj.startDate
+								filterObj.endDate
 									? moment(filterObj.endDate).format('LL')
 									: 'End Date'
 							}
