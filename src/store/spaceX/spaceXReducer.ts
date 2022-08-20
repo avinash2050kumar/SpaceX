@@ -72,7 +72,7 @@ export default (state = initialState, action: SpaceXActionType) => {
 
 			// Upcoming Launch
 			// do nothing for length = 2 (true & false)
-			if (upcomingStatus.length === 1) {
+			if (upcomingStatus && upcomingStatus.length === 1) {
 				const isUpcoming = upcomingStatus[0] === 'upcoming';
 				filteredLaunches = filteredLaunches.filter(
 					(el) => isUpcoming === el.upcoming,
@@ -81,7 +81,7 @@ export default (state = initialState, action: SpaceXActionType) => {
 
 			// Success Launch
 			// do nothing for length = 2 (true & false)
-			if (launchStatusOpt.length === 1) {
+			if (launchStatusOpt && launchStatusOpt.length === 1) {
 				const isSuccess = launchStatusOpt[0] === 'success';
 				filteredLaunches = filteredLaunches.filter(
 					(el) => isSuccess === el.launch_success,
@@ -89,7 +89,7 @@ export default (state = initialState, action: SpaceXActionType) => {
 			}
 
 			// Rocket Name
-			if (rocketName.length > 0) {
+			if (rocketName && rocketName.length > 0) {
 				filteredLaunches = filteredLaunches.filter((el) => {
 					return rocketName.indexOf(el.rocket.rocket_name) >= 0;
 				});

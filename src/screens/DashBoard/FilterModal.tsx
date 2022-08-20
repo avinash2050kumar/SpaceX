@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { FilterItem } from './FilterItem';
 import { SelectDate } from 'components/app';
-import { filterObjInitialState, LAUNCH_STATUS_OPT, UPCOMING_OPT } from 'data';
+import { LAUNCH_STATUS_OPT, UPCOMING_OPT } from 'data';
 import type { TSpaceX } from 'typings/spaceX';
 import type { ModalProps } from 'react-native';
 import { formatDate, toDate } from 'utils/date';
@@ -56,9 +56,9 @@ type Props = ModalProps & {
 };
 
 export type FilterObjProps = {
-	rocketName: string[];
-	launchStatusOpt: string[];
-	upcomingStatus: string[];
+	rocketName?: string[];
+	launchStatusOpt?: string[];
+	upcomingStatus?: string[];
 	startDate?: Date;
 	endDate?: Date;
 };
@@ -69,9 +69,7 @@ const FilterModal: React.ComponentType<Props> = ({
 	onClose,
 	...props
 }) => {
-	const [filterObj, setFilterObj] = useState<FilterObjProps>(
-		filterObjInitialState,
-	);
+	const [filterObj, setFilterObj] = useState<FilterObjProps>({});
 	const minimumDate = new Date(2000, 0, 0);
 	const { startDate, endDate, rocketName, launchStatusOpt, upcomingStatus } =
 		filterObj;
@@ -89,8 +87,8 @@ const FilterModal: React.ComponentType<Props> = ({
 	};
 
 	const onReset = () => {
-		setFilterObj(filterObjInitialState);
-		onDone(filterObjInitialState);
+		setFilterObj({});
+		onDone({});
 		onClose();
 	};
 
@@ -119,7 +117,7 @@ const FilterModal: React.ComponentType<Props> = ({
 							/>
 						</TouchableOpacity>
 					</FlexRow>
-					<Gutter />
+					<Gutter spacing={1.5} />
 					<FilterItem
 						name={'rocketName'}
 						title={'Rocket Name'}
@@ -144,9 +142,9 @@ const FilterModal: React.ComponentType<Props> = ({
 						onSelect={onItemClick}
 					/>
 					<Gutter />
+
 					<BoldText fontSize={'as'}>Date Range</BoldText>
 					<Gutter spacing={0.5} />
-
 					<FlexRow justifyContent={'space-between'}>
 						<SelectDate
 							name={'startDate'}
