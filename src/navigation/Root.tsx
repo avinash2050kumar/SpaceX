@@ -4,7 +4,7 @@ import { LaunchDetails, LaunchDashboard } from 'screens';
 
 export type RootStackParamList = {
 	Dashboard: undefined;
-	Details: undefined;
+	LaunchDetails: { flight_number: number };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -16,7 +16,10 @@ const RootStack = () => {
 				name="Dashboard"
 				getComponent={() => LaunchDashboard}
 			/>
-			<Stack.Screen name="Details" getComponent={() => LaunchDetails} />
+			<Stack.Screen
+				name="LaunchDetails"
+				getComponent={() => LaunchDetails}
+			/>
 		</Stack.Navigator>
 	);
 };
