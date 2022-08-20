@@ -9,9 +9,11 @@ const Pallet = {
 	grey3: '#E6EAEC',
 	grey4: '#F0F4F6',
 	red: '#c43232',
+	lightRed: '#ffe8e7',
 	blue: '#87CEEB',
 	black: '#000',
-	green: '#0E9700',
+	green: '#66a366',
+	lightGreen: '#dbf0da',
 	transparentBlack: '#00000077',
 };
 

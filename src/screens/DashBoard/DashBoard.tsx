@@ -146,7 +146,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 					<LaunchCard key={item.mission_name} item={item} />
 				)}
 				showsVerticalScrollIndicator={false}
-				ItemSeparatorComponent={() => <Gutter spacing={0.7} />}
+				ItemSeparatorComponent={() => <Gutter spacing={1} />}
 				ListFooterComponent={() =>
 					launches.length ? <Gutter spacing={4} /> : null
 				}
