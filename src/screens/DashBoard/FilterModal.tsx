@@ -165,10 +165,15 @@ const FilterModal: React.ComponentType<Props> = ({
 									: 'End Date'
 							}
 							onSelect={(date: Date) => onSelect('endDate', date)}
-							minimumDate={moment(filterObj.startDate).toDate()}
+							minimumDate={
+								filterObj.startDate
+									? moment(filterObj.startDate).toDate()
+									: new Date(2000, 0, 0)
+							}
 							maximumDate={moment().toDate()}
 						/>
 					</FlexRow>
+
 					<Gutter spacing={2} />
 
 					<FlexRow justifyContent={'space-between'}>
