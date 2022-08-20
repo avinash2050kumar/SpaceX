@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { FlexCol, Gutter, Typography } from 'components/atoms';
+import { ScrollView, StyleSheet } from 'react-native';
+import { FlexCol, FlexRow, Gutter, Typography } from 'components/atoms';
 import styled from 'styled-components/native';
 import { RootStackParamList } from 'navigation/Root';
 import type { RouteProp } from '@react-navigation/native';
@@ -28,8 +28,20 @@ const BoldText = styled(Typography)`
 	font-weight: bold;
 `;
 
-const Label = styled(BoldText)`
-	color: ${(props) => props.theme.colors.text};
+const Card = styled(FlexCol)`
+	padding: 14px;
+	border-radius: 10px;
+	border-width: 1px;
+	border-color: ${(props) => props.theme.colors.grey3};
+`;
+
+const Col = styled(FlexCol)`
+	flex: 1;
+	padding: 0 0 0 10px;
+`;
+
+const Label = styled(Typography)`
+	color: ${(props) => props.theme.colors.black};
 	font-size: ${(props) => props.theme.fontSize.as};
 `;
 
@@ -63,83 +75,121 @@ const LaunchDetails: React.ComponentType<Props> = ({ route }) => {
 	}: TSpaceX = launches[launchIndex];
 
 	return (
-		<ScrollView showsVerticalScrollIndicator={false}>
+		<ScrollView
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={style.scrollView}
+		>
 			<Wrapper>
-				<Gutter />
-				<Image
-					source={{
-						uri: links.mission_patch_small,
-						priority: FastImage.priority.normal,
-					}}
-				/>
+				{links.mission_patch_small && (
+					<>
+						<Gutter />
+						<Image
+							source={{
+								uri: links.mission_patch_small,
+								priority: FastImage.priority.normal,
+							}}
+							resizeMode={FastImage.resizeMode.stretch}
+						/>
+					</>
+				)}
 				<Gutter spacing={3} />
 
-				<BoldText fontSize={'m'} fontColor={'black'}>
-					{mission_name}
-				</BoldText>
-				<BoldText fontSize={'as'}>
-					{moment(launch_date_utc).format('LL')}
-				</BoldText>
+				<FlexCol justifyContent={'center'} alignItems={'center'}>
+					<BoldText fontSize={'m'} fontColor={'black'}>
+						{mission_name}
+					</BoldText>
+					<BoldText fontSize={'as'}>
+						{moment(launch_date_utc).format('LL')}
+					</BoldText>
+				</FlexCol>
 
 				<Gutter spacing={2} />
 
-				<FlexCol>
+				<Card>
 					<BoldText fontSize={'s'} fontColor={'black'}>
 						Launch Site
 					</BoldText>
-					<Gutter spacing={0.2} />
-					<Typography fontSize={'as'}>
-						<Label>Name</Label> - {launch_site.site_name}
-					</Typography>
-					<Typography fontSize={'as'}>
-						<Label>Location</Label> - {launch_site.site_name_long}
-					</Typography>
-				</FlexCol>
+					<Gutter spacing={0.5} />
+					<FlexRow justifyContent={'space-between'}>
+						<FlexCol>
+							<Label>Name </Label>
+							<Label>Location </Label>
+						</FlexCol>
+						<Col>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{launch_site.site_name}
+							</Typography>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{launch_site.site_name_long}
+							</Typography>
+						</Col>
+					</FlexRow>
+				</Card>
 
 				<Gutter />
 
-				<FlexCol>
+				<Card>
 					<BoldText fontSize={'s'} fontColor={'black'}>
 						Launch Status
 					</BoldText>
-					<Gutter spacing={0.2} />
-					<Typography fontSize={'as'}>
-						<Label>Success</Label> -{' '}
-						{launch_success ? 'true' : 'false'}
-					</Typography>
-					<Typography fontSize={'as'}>
-						<Label>Upcoming</Label> - {upcoming ? 'true' : 'false'}
-					</Typography>
-				</FlexCol>
+					<Gutter spacing={0.5} />
+					<FlexRow justifyContent={'space-between'}>
+						<FlexCol>
+							<Label>Success </Label>
+							<Label>Upcoming </Label>
+						</FlexCol>
+						<Col>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{launch_success ? 'true' : 'false'}
+							</Typography>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{upcoming ? 'true' : 'false'}
+							</Typography>
+						</Col>
+					</FlexRow>
+				</Card>
 
 				<Gutter />
 
-				<FlexCol>
+				<Card>
 					<BoldText fontSize={'s'} fontColor={'black'}>
 						Rocket
 					</BoldText>
-					<Gutter spacing={0.2} />
-					<Typography fontSize={'as'}>
-						<Label>Name</Label> - {rocket_name}
-					</Typography>
-					<Typography fontSize={'as'}>
-						<Label>Type</Label> - {rocket_type}
-					</Typography>
-				</FlexCol>
+					<Gutter spacing={0.5} />
+					<FlexRow justifyContent={'space-between'}>
+						<FlexCol>
+							<Label>Name </Label>
+							<Label>Type </Label>
+						</FlexCol>
+						<Col>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{rocket_name}
+							</Typography>
+							<Typography fontSize={'as'} style={style.flex1}>
+								{rocket_type}
+							</Typography>
+						</Col>
+					</FlexRow>
+				</Card>
 
 				<Gutter />
 
-				<FlexCol>
+				<Card>
 					<BoldText fontSize={'s'} fontColor={'black'}>
 						Details
 					</BoldText>
-					<Gutter spacing={0.2} />
+					<Gutter spacing={0.5} />
 					<Typography fontSize={'as'}>{details}</Typography>
-				</FlexCol>
+				</Card>
 				<Gutter spacing={2} />
 			</Wrapper>
 		</ScrollView>
 	);
 };
+
+const style = StyleSheet.create({
+	scrollView: { flexGrow: 1 },
+	flex1: { flex: 1 },
+});
 
 export { LaunchDetails };
