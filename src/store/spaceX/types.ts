@@ -1,10 +1,12 @@
 import { TSpaceX } from 'typings/spaceX';
 import type { LaunchSortOrder } from 'screens/DashBoard';
+import type { TFilterObj } from 'screens/DashBoard';
 
 export const SPACEX_LOADING = 'SPACEX_LOADING';
 export const SET_LAUNCHES = 'SET_LAUNCHES';
 export const RESET_LAUNCHES = 'RESET_LAUNCHES';
 export const SORT_LAUNCHES = 'SORT_LAUNCHES';
+export const FILTER_LAUNCHES = 'FILTER_LAUNCHES';
 
 interface ISetSpaceXLoading {
 	type: typeof SPACEX_LOADING;
@@ -25,8 +27,14 @@ interface ISortLaunches {
 	payload: LaunchSortOrder;
 }
 
+interface IFilterLaunches {
+	type: typeof FILTER_LAUNCHES;
+	payload: TFilterObj;
+}
+
 export type SpaceXActionType =
 	| ISetSpaceXLoading
 	| ISetAllLaunches
 	| IResetLaunchState
-	| ISortLaunches;
+	| ISortLaunches
+	| IFilterLaunches;

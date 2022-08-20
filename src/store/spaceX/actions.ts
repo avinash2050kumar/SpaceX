@@ -1,6 +1,7 @@
 import { Client } from 'utils/axios';
 import type { TSpaceX } from 'typings/spaceX';
 import {
+	FILTER_LAUNCHES,
 	RESET_LAUNCHES,
 	SET_LAUNCHES,
 	SORT_LAUNCHES,
@@ -8,6 +9,7 @@ import {
 } from 'store/spaceX/types';
 import type { Dispatch } from 'redux';
 import type { LaunchSortOrder } from 'screens/DashBoard';
+import type { TFilterObj } from 'screens/DashBoard';
 
 export const fetchAllLaunches = () => async (dispatch: Dispatch) => {
 	try {
@@ -23,6 +25,11 @@ export const fetchAllLaunches = () => async (dispatch: Dispatch) => {
 
 export const setSpaceXLoading = (payload: boolean) => ({
 	type: SPACEX_LOADING,
+	payload,
+});
+
+export const filterSpaceXLaunches = (payload: TFilterObj) => ({
+	type: FILTER_LAUNCHES,
 	payload,
 });
 
