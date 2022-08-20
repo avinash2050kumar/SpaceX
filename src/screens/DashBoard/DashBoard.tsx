@@ -80,7 +80,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 		});
 	}, [navigation]);
 
-	const onSortSelect = (item: LaunchSortOrder) => {
+	const onSelectSortItem = (item: LaunchSortOrder) => {
 		setSortOrder(item);
 		dispatch(sortLaunches(item));
 		setIsSortVisible(false);
@@ -90,7 +90,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 		return <ItemCard item={item} />;
 	}, []);
 
-	const onFilter = (obj: FilterObjProps) => {
+	const onSelectFilter = (obj: FilterObjProps) => {
 		dispatch(filterSpaceXLaunches(obj));
 		dispatch(sortLaunches(sortOrder));
 	};
@@ -109,14 +109,14 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 			{launches.length === 0 && !loading && <NoDataFound />}
 			<SortModal
 				selected={sortOrder}
-				onSelect={onSortSelect}
+				onSelect={onSelectSortItem}
 				sortOrder={sortOrder}
 				visible={isSortVisible}
 				onClose={() => setIsSortVisible(false)}
 			/>
 			<FilterModal
 				visible={isFilterVisible}
-				onDone={onFilter}
+				onDone={onSelectFilter}
 				onClose={() => setIsFilterVisible(false)}
 				dataSource={dataSource}
 			/>

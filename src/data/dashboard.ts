@@ -1,10 +1,10 @@
-export type TLAUNCH_SORT_ORDER = {
+export type SortOrderTypes = {
 	id: number;
 	name: string;
 	value: 'Launch_Date' | 'Mission_Name';
 };
 
-export const LAUNCH_SORT_ORDER: TLAUNCH_SORT_ORDER[] = [
+export const LAUNCH_SORT_ORDER: SortOrderTypes[] = [
 	{
 		id: 0,
 		name: 'Mission Name',

@@ -25,7 +25,7 @@ const TextWrapper = styled.TouchableOpacity`
 type Props = {
 	name: string;
 	text: string;
-	onSelect: Function;
+	onSelect(name: string, value: any): void;
 } & Pick<ReactNativeModalDateTimePickerProps, 'minimumDate' | 'maximumDate'>;
 
 const SelectDate: React.ComponentType<Props> = ({

@@ -22,15 +22,15 @@ export type TFilterItem = {
 type Props = {
 	name: string;
 	title: string;
-	option: TFilterItem[];
-	selected: string[];
-	onSelect: Function;
+	option?: TFilterItem[];
+	selected?: string[];
+	onSelect(name: string, value: string[]): void;
 };
 
 const FilterItem: React.ComponentType<Props> = ({
 	title,
-	option,
-	selected,
+	option = [],
+	selected = [],
 	name,
 	onSelect,
 }) => {

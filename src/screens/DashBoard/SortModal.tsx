@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { FlexCol, FlexRow, Gutter, Typography } from 'components/atoms';
 import { TouchableOpacity } from 'react-native';
 import { LAUNCH_SORT_ORDER } from 'data';
-import type { TLAUNCH_SORT_ORDER } from 'data';
+import type { SortOrderTypes } from 'data';
 import { useColor } from 'hooks/useColor';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -43,11 +43,12 @@ const Text = styled(Typography)<{ isSelected?: boolean }>`
 
 // Types and Props
 export type LaunchSortOrder = 'Launch_Date' | 'Mission_Name';
+
 type Props = ModalProps & {
 	selected: LaunchSortOrder;
 	sortOrder: LaunchSortOrder;
-	onSelect: Function;
-	onClose: Function;
+	onSelect(value: LaunchSortOrder): void;
+	onClose(): void;
 };
 
 const SortModal: React.ComponentType<Props> = ({
@@ -59,7 +60,7 @@ const SortModal: React.ComponentType<Props> = ({
 	const green = useColor('green');
 
 	const Option = useCallback(
-		({ item }: { item: TLAUNCH_SORT_ORDER }) => {
+		({ item }: { item: SortOrderTypes }) => {
 			const isSelected = item.value === selected;
 			return (
 				<ItemWrapper

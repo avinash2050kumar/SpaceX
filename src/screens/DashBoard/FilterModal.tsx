@@ -50,8 +50,8 @@ const BoldText = styled(Typography)`
 
 // Types and Props
 type Props = ModalProps & {
-	onDone: Function;
-	onClose: Function;
+	onDone(filterObj: FilterObjProps): void;
+	onClose(): void;
 	dataSource: TSpaceX[];
 };
 
@@ -72,11 +72,11 @@ const FilterModal: React.ComponentType<Props> = ({
 	const [filterObj, setFilterObj] = useState<FilterObjProps>(
 		filterObjInitialState,
 	);
+	const minimumDate = new Date(2000, 0, 0);
 	const { startDate, endDate, rocketName, launchStatusOpt, upcomingStatus } =
 		filterObj;
-	const minimumDate = new Date(2000, 0, 0);
 
-	// List of all rockets
+	// List of all available rockets
 	const rocketList = dataSource
 		.map((item) => item.rocket.rocket_name)
 		.filter((value, index, self) => self.indexOf(value) === index)
@@ -84,7 +84,7 @@ const FilterModal: React.ComponentType<Props> = ({
 			Object.assign({}, { id: index, name: opt, value: opt }),
 		);
 
-	const onCapsulePress = (name: string, value: any) => {
+	const onItemClick = (name: string, value: any) => {
 		setFilterObj({ ...filterObj, [name]: value });
 	};
 
@@ -125,7 +125,7 @@ const FilterModal: React.ComponentType<Props> = ({
 						title={'Rocket Name'}
 						option={rocketList}
 						selected={rocketName}
-						onSelect={onCapsulePress}
+						onSelect={onItemClick}
 					/>
 					<Gutter />
 					<FilterItem
@@ -133,7 +133,7 @@ const FilterModal: React.ComponentType<Props> = ({
 						title={'Up-Coming'}
 						option={UPCOMING_OPT}
 						selected={upcomingStatus}
-						onSelect={onCapsulePress}
+						onSelect={onItemClick}
 					/>
 					<Gutter />
 					<FilterItem
@@ -141,7 +141,7 @@ const FilterModal: React.ComponentType<Props> = ({
 						title={'Launch Status'}
 						option={LAUNCH_STATUS_OPT}
 						selected={launchStatusOpt}
-						onSelect={onCapsulePress}
+						onSelect={onItemClick}
 					/>
 					<Gutter />
 					<BoldText fontSize={'as'}>Date Range</BoldText>
@@ -153,14 +153,14 @@ const FilterModal: React.ComponentType<Props> = ({
 							text={
 								startDate ? formatDate(startDate) : 'Start Date'
 							}
-							onSelect={onCapsulePress}
+							onSelect={onItemClick}
 							minimumDate={minimumDate}
 							maximumDate={toDate(endDate)}
 						/>
 						<SelectDate
 							name={'endDate'}
 							text={endDate ? formatDate(endDate) : 'End Date'}
-							onSelect={onCapsulePress}
+							onSelect={onItemClick}
 							minimumDate={
 								startDate ? toDate(startDate) : minimumDate
 							}
@@ -174,7 +174,7 @@ const FilterModal: React.ComponentType<Props> = ({
 						<Button onPress={onReset} backgroundColor={'grey3'}>
 							<BoldText fontColor={'black'}>Reset</BoldText>
 						</Button>
-						<Button backgroundColor={'black'} onPress={onDoneClick}>
+						<Button onPress={onDoneClick} backgroundColor={'black'}>
 							<BoldText fontColor={'primaryWhite'}>Done</BoldText>
 						</Button>
 					</FlexRow>
