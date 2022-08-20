@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 
 import {
 	fetchAllLaunches,
+	filterSpaceXLaunches,
 	resetLaunches,
 	sortLaunches,
 } from 'store/spaceX/actions';
@@ -22,6 +23,7 @@ import { RootStackParamList } from 'navigation/Root';
 
 const Wrapper = styled(FlexCol)`
 	padding: 14px;
+	height: 100%;
 	flex: 1;
 	background: ${(props) => props.theme.colors.grey};
 `;
@@ -40,6 +42,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	const [sortOrder, setSortOrder] = useState<LaunchSortOrder>('Launch_Date');
 	const [isSortVisible, setIsSortVisible] = useState<boolean>(false);
 	const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
+
 	const loading = useSelector((state: RootState) => state.main.loading);
 	const launches = useSelector(
 		(state: RootState) => state.main.filteredDataSource,
@@ -47,14 +50,6 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	const dataSource = useSelector(
 		(state: RootState) => state.main.spaceXDataSource,
 	);
-
-	useEffect(() => {
-		dispatch(fetchAllLaunches());
-
-		return () => {
-			dispatch(resetLaunches());
-		};
-	}, [dispatch]);
 
 	// Navbar Icons
 	React.useLayoutEffect(() => {
@@ -91,8 +86,17 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	}, []);
 
 	const onFilter = (obj: TFilterObj) => {
-		console.log(obj, 'filterObj');
+		dispatch(filterSpaceXLaunches(obj));
+		dispatch(sortLaunches(sortOrder));
 	};
+
+	useEffect(() => {
+		dispatch(fetchAllLaunches());
+
+		return () => {
+			dispatch(resetLaunches());
+		};
+	}, [dispatch]);
 
 	return (
 		<Wrapper>

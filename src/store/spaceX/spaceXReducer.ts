@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import type { SpaceXActionType } from 'store/spaceX/types';
 import {
+	FILTER_LAUNCHES,
 	RESET_LAUNCHES,
 	SET_LAUNCHES,
 	SORT_LAUNCHES,
@@ -55,6 +56,60 @@ export default (state = initialState, action: SpaceXActionType) => {
 
 			return update(state, {
 				filteredDataSource: { $set: sortData },
+			});
+		}
+
+		case FILTER_LAUNCHES: {
+			const {
+				startDate,
+				endDate,
+				rocketName,
+				launchStatusOpt,
+				upcomingStatus,
+			} = action.payload;
+
+			let filteredLaunches: TSpaceX[] = state.spaceXDataSource;
+
+			// Upcoming Launch
+			// do nothing for length = 2 (true & false)
+			if (upcomingStatus.length === 1) {
+				const isUpcoming = upcomingStatus[0] === 'upcoming';
+				filteredLaunches = filteredLaunches.filter(
+					(el) => isUpcoming === el.upcoming,
+				);
+			}
+
+			// Success Launch
+			// do nothing for length = 2 (true & false)
+			if (launchStatusOpt.length === 1) {
+				const isSuccess = launchStatusOpt[0] === 'success';
+				filteredLaunches = filteredLaunches.filter(
+					(el) => isSuccess === el.launch_success,
+				);
+			}
+
+			// Rocket Name
+			if (rocketName.length > 0) {
+				filteredLaunches = filteredLaunches.filter((el) => {
+					return rocketName.indexOf(el.rocket.rocket_name) >= 0;
+				});
+			}
+
+			// DateWise
+			if (startDate) {
+				filteredLaunches = filteredLaunches.filter((launch) =>
+					moment(launch.launch_date_utc).isAfter(moment(startDate)),
+				);
+			}
+
+			if (endDate) {
+				filteredLaunches = filteredLaunches.filter((launch) =>
+					moment(launch.launch_date_utc).isBefore(moment(endDate)),
+				);
+			}
+
+			return update(state, {
+				filteredDataSource: { $set: filteredLaunches },
 			});
 		}
 
