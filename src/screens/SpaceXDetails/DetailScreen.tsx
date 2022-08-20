@@ -50,6 +50,7 @@ const LaunchDetails: React.ComponentType<Props> = ({ route }) => {
 	const launchIndex = launches.findIndex(
 		(launch) => launch.flight_number === flight_number,
 	);
+
 	const {
 		launch_success,
 		upcoming,
@@ -103,10 +104,11 @@ const LaunchDetails: React.ComponentType<Props> = ({ route }) => {
 					</BoldText>
 					<Gutter spacing={0.2} />
 					<Typography fontSize={'as'}>
-						<Label>Success</Label> - {launch_success.toString()}
+						<Label>Success</Label> -{' '}
+						{launch_success ? 'true' : 'false'}
 					</Typography>
 					<Typography fontSize={'as'}>
-						<Label>Upcoming</Label> - {upcoming.toString()}
+						<Label>Upcoming</Label> - {upcoming ? 'true' : 'false'}
 					</Typography>
 				</FlexCol>
 
