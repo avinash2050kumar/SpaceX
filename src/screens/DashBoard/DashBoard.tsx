@@ -17,18 +17,25 @@ import type { TFilterObj } from 'screens/DashBoard';
 import type { LaunchSortOrder } from 'screens/DashBoard';
 import { TSpaceX } from 'typings/spaceX';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from 'navigation/Root';
 
 const Wrapper = styled(FlexCol)`
 	padding: 14px;
 	flex: 1;
-	background: ${(props) => props.theme.colors.gray};
+	background: ${(props) => props.theme.colors.grey};
 `;
 
 const IconWrapper = styled.View`
 	padding: 0 10px;
 `;
 
-const LaunchDashboard = ({ navigation }: any) => {
+//Types
+type Props = {
+	navigation: StackNavigationProp<RootStackParamList, 'Dashboard'>;
+};
+
+const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	const dispatch: Dispatch<any> = useDispatch();
 	const [sortOrder, setSortOrder] = useState<LaunchSortOrder>('Launch_Date');
 	const [isSortVisible, setIsSortVisible] = useState<boolean>(false);
