@@ -1,6 +1,6 @@
 import { TSpaceX } from 'typings/spaceX';
 import type { LaunchSortOrder } from 'screens/DashBoard';
-import type { TFilterObj } from 'screens/DashBoard';
+import type { FilterObjProps } from 'screens/DashBoard';
 
 export const SPACEX_LOADING = 'SPACEX_LOADING';
 export const SET_LAUNCHES = 'SET_LAUNCHES';
@@ -29,7 +29,7 @@ interface ISortLaunches {
 
 interface IFilterLaunches {
 	type: typeof FILTER_LAUNCHES;
-	payload: TFilterObj;
+	payload: FilterObjProps;
 }
 
 export type SpaceXActionType =

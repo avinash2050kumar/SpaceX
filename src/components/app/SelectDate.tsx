@@ -23,6 +23,7 @@ const TextWrapper = styled.TouchableOpacity`
 `;
 
 type Props = {
+	name: string;
 	text: string;
 	onSelect: Function;
 } & Pick<ReactNativeModalDateTimePickerProps, 'minimumDate' | 'maximumDate'>;
@@ -30,6 +31,7 @@ type Props = {
 const SelectDate: React.ComponentType<Props> = ({
 	text,
 	onSelect,
+	name,
 	...props
 }) => {
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -39,7 +41,7 @@ const SelectDate: React.ComponentType<Props> = ({
 	};
 
 	const handleConfirm = (date: Date) => {
-		onSelect(moment(date).format());
+		onSelect(name, moment(date).format());
 		hideDatePicker();
 	};
 

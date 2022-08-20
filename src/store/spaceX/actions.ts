@@ -9,7 +9,7 @@ import {
 } from 'store/spaceX/types';
 import type { Dispatch } from 'redux';
 import type { LaunchSortOrder } from 'screens/DashBoard';
-import type { TFilterObj } from 'screens/DashBoard';
+import type { FilterObjProps } from 'screens/DashBoard';
 
 export const fetchAllLaunches = () => async (dispatch: Dispatch) => {
 	try {
@@ -28,7 +28,7 @@ export const setSpaceXLoading = (payload: boolean) => ({
 	payload,
 });
 
-export const filterSpaceXLaunches = (payload: TFilterObj) => ({
+export const filterSpaceXLaunches = (payload: FilterObjProps) => ({
 	type: FILTER_LAUNCHES,
 	payload,
 });

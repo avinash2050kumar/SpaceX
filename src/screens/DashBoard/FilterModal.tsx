@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import moment from 'moment';
 import styled, { DefaultTheme } from 'styled-components/native';
 import { FlexCol, FlexRow, Gutter, Typography } from 'components/atoms';
 import { TouchableOpacity } from 'react-native';
@@ -10,6 +9,7 @@ import { SelectDate } from 'components/app';
 import { filterObjInitialState, LAUNCH_STATUS_OPT, UPCOMING_OPT } from 'data';
 import type { TSpaceX } from 'typings/spaceX';
 import type { ModalProps } from 'react-native';
+import { formatDate, toDate } from 'utils/date';
 
 const Modal = styled.Modal`
 	display: flex;
@@ -55,7 +55,7 @@ type Props = ModalProps & {
 	dataSource: TSpaceX[];
 };
 
-export type TFilterObj = {
+export type FilterObjProps = {
 	rocketName: string[];
 	launchStatusOpt: string[];
 	upcomingStatus: string[];
@@ -69,18 +69,22 @@ const FilterModal: React.ComponentType<Props> = ({
 	onClose,
 	...props
 }) => {
-	const [filterObj, setFilterObj] = useState<TFilterObj>(
+	const [filterObj, setFilterObj] = useState<FilterObjProps>(
 		filterObjInitialState,
 	);
+	const { startDate, endDate, rocketName, launchStatusOpt, upcomingStatus } =
+		filterObj;
+	const minimumDate = new Date(2000, 0, 0);
 
-	const rocketName = dataSource
+	// List of all rockets
+	const rocketList = dataSource
 		.map((item) => item.rocket.rocket_name)
 		.filter((value, index, self) => self.indexOf(value) === index)
 		.map((opt, index) =>
 			Object.assign({}, { id: index, name: opt, value: opt }),
 		);
 
-	const onSelect = (name: string, value: any) => {
+	const onCapsulePress = (name: string, value: any) => {
 		setFilterObj({ ...filterObj, [name]: value });
 	};
 
@@ -117,60 +121,50 @@ const FilterModal: React.ComponentType<Props> = ({
 					</FlexRow>
 					<Gutter />
 					<FilterItem
+						name={'rocketName'}
 						title={'Rocket Name'}
-						option={rocketName}
-						selected={filterObj.rocketName}
-						onSelect={(value: string[]) => {
-							onSelect('rocketName', value);
-						}}
+						option={rocketList}
+						selected={rocketName}
+						onSelect={onCapsulePress}
 					/>
 					<Gutter />
 					<FilterItem
+						name={'upcomingStatus'}
 						title={'Up-Coming'}
 						option={UPCOMING_OPT}
-						selected={filterObj.upcomingStatus}
-						onSelect={(value: string[]) => {
-							onSelect('upcomingStatus', value);
-						}}
+						selected={upcomingStatus}
+						onSelect={onCapsulePress}
 					/>
 					<Gutter />
 					<FilterItem
+						name={'launchStatusOpt'}
 						title={'Launch Status'}
 						option={LAUNCH_STATUS_OPT}
-						selected={filterObj.launchStatusOpt}
-						onSelect={(value: string[]) => {
-							onSelect('launchStatusOpt', value);
-						}}
+						selected={launchStatusOpt}
+						onSelect={onCapsulePress}
 					/>
 					<Gutter />
 					<BoldText fontSize={'as'}>Date Range</BoldText>
 					<Gutter spacing={0.5} />
+
 					<FlexRow justifyContent={'space-between'}>
 						<SelectDate
+							name={'startDate'}
 							text={
-								filterObj.startDate
-									? moment(filterObj.startDate).format('LL')
-									: 'Start Date'
+								startDate ? formatDate(startDate) : 'Start Date'
 							}
-							onSelect={(date: Date) =>
-								onSelect('startDate', date)
-							}
-							minimumDate={new Date(2000, 0, 0)}
-							maximumDate={moment(filterObj.endDate).toDate()}
+							onSelect={onCapsulePress}
+							minimumDate={minimumDate}
+							maximumDate={toDate(endDate)}
 						/>
 						<SelectDate
-							text={
-								filterObj.endDate
-									? moment(filterObj.endDate).format('LL')
-									: 'End Date'
-							}
-							onSelect={(date: Date) => onSelect('endDate', date)}
+							name={'endDate'}
+							text={endDate ? formatDate(endDate) : 'End Date'}
+							onSelect={onCapsulePress}
 							minimumDate={
-								filterObj.startDate
-									? moment(filterObj.startDate).toDate()
-									: new Date(2000, 0, 0)
+								startDate ? toDate(startDate) : minimumDate
 							}
-							maximumDate={moment().toDate()}
+							maximumDate={toDate()}
 						/>
 					</FlexRow>
 

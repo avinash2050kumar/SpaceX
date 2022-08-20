@@ -20,6 +20,7 @@ export type TFilterItem = {
 };
 
 type Props = {
+	name: string;
 	title: string;
 	option: TFilterItem[];
 	selected: string[];
@@ -30,6 +31,7 @@ const FilterItem: React.ComponentType<Props> = ({
 	title,
 	option,
 	selected,
+	name,
 	onSelect,
 }) => {
 	const RenderCapsule = useCallback(
@@ -39,12 +41,12 @@ const FilterItem: React.ComponentType<Props> = ({
 					isSelected={isSelected}
 					text={item.name}
 					onSelect={() =>
-						onSelect(addOrRemoveArr(selected, item.value))
+						onSelect(name, addOrRemoveArr(selected, item.value))
 					}
 				/>
 			);
 		},
-		[onSelect, selected],
+		[name, onSelect, selected],
 	);
 
 	return (

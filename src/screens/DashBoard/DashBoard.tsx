@@ -13,8 +13,13 @@ import { Loading } from 'components/app';
 import type { RootState } from 'store/rootReducer';
 import { FlexCol, FlexRow, Gutter } from 'components/atoms';
 import styled from 'styled-components/native';
-import { FilterModal, ItemCard, SortModal } from 'screens/DashBoard';
-import type { TFilterObj } from 'screens/DashBoard';
+import {
+	FilterModal,
+	ItemCard,
+	NoDataFound,
+	SortModal,
+} from 'screens/DashBoard';
+import type { FilterObjProps } from 'screens/DashBoard';
 import type { LaunchSortOrder } from 'screens/DashBoard';
 import { TSpaceX } from 'typings/spaceX';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -85,7 +90,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 		return <ItemCard item={item} />;
 	}, []);
 
-	const onFilter = (obj: TFilterObj) => {
+	const onFilter = (obj: FilterObjProps) => {
 		dispatch(filterSpaceXLaunches(obj));
 		dispatch(sortLaunches(sortOrder));
 	};
@@ -101,6 +106,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	return (
 		<Wrapper>
 			<Loading isLoading={loading} />
+			{launches.length === 0 && !loading && <NoDataFound />}
 			<SortModal
 				selected={sortOrder}
 				onSelect={onSortSelect}
@@ -116,6 +122,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 			/>
 			<FlatList
 				data={launches}
+				extraData={launches}
 				initialNumToRender={20}
 				numColumns={2}
 				columnWrapperStyle={style.row}
