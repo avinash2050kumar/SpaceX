@@ -1,4 +1,4 @@
-import { TFilterObj } from 'screens/DashBoard';
+import type { TFilterObj } from 'screens/DashBoard';
 
 export const filterObjInitialState: TFilterObj = {
 	rocketName: [],
