@@ -1,11 +1,3 @@
-/*export const FILTER_OBJ_INITIAL_STATE = {
-	rocketName: [],
-	launchStatusOpt: [],
-	upcomingStatus: [],
-	startDate: undefined,
-	endDate: undefined,
-};*/
-
 export const UPCOMING_OPT = [
 	{ id: 0, name: 'Upcoming', value: 'upcoming' },
 	{ id: 1, name: 'Completed', value: 'completed' },

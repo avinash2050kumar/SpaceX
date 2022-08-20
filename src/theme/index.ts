@@ -8,7 +8,7 @@ const Pallet = {
 	grey2: '#AAAAAA',
 	grey3: '#E6EAEC',
 	grey4: '#F0F4F6',
-	error: '#c43232',
+	red: '#c43232',
 	blue: '#87CEEB',
 	black: '#000',
 	green: '#0E9700',

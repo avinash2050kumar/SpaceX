@@ -34,7 +34,17 @@ const Wrapper = styled(FlexCol)`
 `;
 
 const IconWrapper = styled.View`
-	padding: 0 10px;
+	position: relative;
+`;
+
+const Circle = styled.View`
+	width: 5px;
+	height: 5px;
+	position: absolute;
+	border-radius: 3px;
+	bottom: 3px;
+	right: 11px;
+	background-color: ${(props) => props.theme.colors.red};
 `;
 
 //Types
@@ -45,6 +55,7 @@ type Props = {
 const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	const dispatch: Dispatch<any> = useDispatch();
 	const [sortOrder, setSortOrder] = useState<LaunchSortOrder>('Launch_Date');
+	const [isFilterSelected, setIsFilterSelected] = useState<boolean>(false);
 	const [isSortVisible, setIsSortVisible] = useState<boolean>(false);
 	const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
 
@@ -63,6 +74,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 				<FlexRow>
 					<IconWrapper>
 						<TouchableOpacity
+							style={style.navBarButton}
 							onPress={() => setIsSortVisible(true)}
 						>
 							<MaterialCommunityIcons name={'sort'} size={20} />
@@ -70,15 +82,17 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 					</IconWrapper>
 					<IconWrapper>
 						<TouchableOpacity
+							style={style.navBarButton}
 							onPress={() => setIsFilterVisible(true)}
 						>
+							{isFilterSelected && <Circle />}
 							<MaterialCommunityIcons name={'filter'} size={20} />
 						</TouchableOpacity>
 					</IconWrapper>
 				</FlexRow>
 			),
 		});
-	}, [navigation]);
+	}, [navigation, isFilterSelected]);
 
 	const onSelectSortItem = (item: LaunchSortOrder) => {
 		setSortOrder(item);
@@ -93,6 +107,7 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 	const onSelectFilter = (obj: FilterObjProps) => {
 		dispatch(filterSpaceXLaunches(obj));
 		dispatch(sortLaunches(sortOrder));
+		setIsFilterSelected(Object.keys(obj).length !== 0);
 	};
 
 	useEffect(() => {
@@ -141,6 +156,11 @@ const LaunchDashboard: React.ComponentType<Props> = ({ navigation }) => {
 };
 
 const style = StyleSheet.create({
+	navBarButton: {
+		paddingLeft: 10,
+		paddingRight: 10,
+	},
+
 	row: {
 		flex: 1,
 		justifyContent: 'space-between',
