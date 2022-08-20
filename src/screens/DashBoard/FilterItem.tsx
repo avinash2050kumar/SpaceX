@@ -37,7 +37,7 @@ const FilterItem: React.ComponentType<Props> = ({
 			return (
 				<Capsule
 					isSelected={isSelected}
-					item={item}
+					text={item.name}
 					onSelect={() =>
 						onSelect(addOrRemoveArr(selected, item.value))
 					}

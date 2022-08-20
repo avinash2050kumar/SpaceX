@@ -4,6 +4,8 @@ import { TouchableOpacity } from 'react-native';
 import { TSpaceX } from 'typings/spaceX';
 import styled from 'styled-components/native';
 import moment from 'moment';
+import { navigate } from 'services/NavigationService';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
 	item: TSpaceX;
@@ -23,7 +25,7 @@ const ImageWrapper = styled(FlexCol)`
 	overflow: hidden;
 `;
 
-const Image = styled.Image`
+const Image = styled(FastImage)`
 	width: 100%;
 	aspect-ratio: 1;
 `;
@@ -34,11 +36,16 @@ const BoldText = styled(Typography)`
 
 const ItemCard: React.ComponentType<Props> = ({ item }) => {
 	return (
-		<Wrapper onPress={() => console.log(item.mission_name + item.crew)}>
+		<Wrapper
+			onPress={() =>
+				navigate('LaunchDetails', { flight_number: item.flight_number })
+			}
+		>
 			<ImageWrapper>
 				<Image
 					source={{
 						uri: item.links.mission_patch_small,
+						priority: FastImage.priority.normal,
 					}}
 				/>
 			</ImageWrapper>
