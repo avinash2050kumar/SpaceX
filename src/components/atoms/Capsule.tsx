@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import type { TFilterItem } from 'screens/DashBoard';
 import { Typography } from 'components/atoms';
 
 const Wrapper = styled.TouchableOpacity<{ isSelected: boolean }>`
@@ -12,25 +11,25 @@ const Wrapper = styled.TouchableOpacity<{ isSelected: boolean }>`
 		props.isSelected ? props.theme.colors.black : props.theme.colors.grey3};
 `;
 
-const Text = styled(Typography)<{ isSelected: boolean }>`
+const Text = styled(Typography)<{ isSelected?: boolean }>`
 	color: ${(props) =>
 		props.isSelected ? props.theme.colors.black : props.theme.colors.text};
 `;
 
 type Props = {
-	isSelected: boolean;
-	item: TFilterItem;
-	onSelect: Function;
+	isSelected?: boolean;
+	text: string;
+	onSelect?: Function;
 };
 
 const Capsule: React.ComponentType<Props> = ({
 	isSelected,
-	item,
+	text,
 	onSelect,
 }) => {
 	return (
 		<Wrapper onPress={onSelect} isSelected={isSelected}>
-			<Text isSelected={isSelected}>{item.name}</Text>
+			<Text isSelected={isSelected}>{text}</Text>
 		</Wrapper>
 	);
 };
