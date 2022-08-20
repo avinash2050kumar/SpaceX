@@ -4,7 +4,7 @@ import { DefaultTheme } from 'styled-components/native';
 const Pallet = {
 	primaryGrey: '#6D7177',
 	primaryWhite: '#FFFFFF',
-	gray: '#fafafa',
+	grey: '#fafafa',
 	grey2: '#AAAAAA',
 	grey3: '#E6EAEC',
 	grey4: '#F0F4F6',
